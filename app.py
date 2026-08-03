@@ -33,7 +33,7 @@ def generate_custom_jersey(name, number):
         # ফন্ট সাইজ সামঞ্জস্য
         try:
             name_font = ImageFont.truetype(font_path, size=75)     # নাম বড় করার জন্য
-            number_font = ImageFont.truetype(font_path, size=350)  # নম্বর বড় করার জন্য
+            number_font = ImageFont.truetype(font_path, size=290)  # নম্বর বড় করার জন্য
         except:
             name_font = ImageFont.load_default()
             number_font = ImageFont.load_default()
@@ -66,8 +66,8 @@ def get_booked_numbers():
 @app.route('/')
 def index():
     booked_numbers = get_booked_numbers()
-    # ১ থেকে ৯৯ পর্যন্ত ফাঁকা নাম্বার নির্ধারণ
-    available_numbers = [i for i in range(1, 100) if i not in booked_numbers]
+    # ১ থেকে ২০০ পর্যন্ত ফাঁকা নাম্বার নির্ধারণ
+    available_numbers = [i for i in range(1, 201) if i not in booked_numbers]
     return render_template('index.html', numbers=available_numbers)
 
 @app.route('/submit', methods=['POST'])
