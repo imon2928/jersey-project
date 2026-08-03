@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jersey Order & Customization</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .main-content {
+            flex: 1;
+        }
+        .custom-navbar {
+            background-color: #800020; /* Dhaka College Maroon Theme */
+        }
+        .custom-footer {
+            background-color: #1a1a1a;
+            color: #d1d1d1;
+        }
+        .gold-text {
+            color: #C59B51;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🌟 HEADER / NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="#">
+                <span class="gold-text">Jersey</span> Customizer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <!-- কাস্টম ফর্ম তৈরি করার অপশন -->
+                        <button class="btn btn-outline-light rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#createFormModal">
+                            ➕ Create Your Own Custom Form
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 📦 MAIN CONTENT (আপনার বিদ্যমান ফর্ম) -->
+    <div class="container my-5 main-content">
+        <div class="row justify-content-center">
+            <div class="col-md-8 bg-white p-4 p-md-5 rounded shadow-sm">
+                <h2 class="text-center mb-4 fw-bold">Jerseys Order Form</h2>
+                
+                <!-- আপনার ফর্মটি যেভাবে ছিল -->
+                <form action="/submit" method="POST">
+                    
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Full Name *</label>
+                        <input type="text" name="full_name" class="form-control" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Department Roll Number *</label>
+                            <input type="text" name="roll" class="form-control" placeholder="Enter Roll Number" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Session *</label>
+                            <input type="text" name="session" class="form-control" placeholder="e.g. 2021-2022" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Mobile Number *</label>
+                        <input type="tel" name="mobile" class="form-control" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Jersey Size *</label>
+                            <select name="size" class="form-select" required>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                                <option value="XXXL">XXXL</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Jersey Number (Inventory Control) *</label>
+                            <select name="jersey_number" class="form-select" required>
+                                <option value="">Select Available Number</option>
+                                {% for num in numbers %}
+                                    <option value="{{ num }}">{{ num }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Name to Print on Jersey *</label>
+                        <input type="text" name="jersey_name" class="form-control" maxlength="15" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Payment Method *</label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_method" value="bKash" required>
+                                <label class="form-check-label">bKash</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_method" value="Nagad">
+                                <label class="form-check-label">Nagad</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_method" value="Cash">
+                                <label class="form-check-label">Cash</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Payment Transaction ID *</label>
+                        <input type="text" name="trx_id" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fs-5" style="background-color: #800020; border: none;">Submit Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 💡 MODAL: নিজস্ব ফর্ম ও গুগল শিট কানেক্ট করার নির্দেশিকা -->
+    <div class="modal fade" id="createFormModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white" style="background-color: #800020;">
+                    <h5 class="modal-title fw-bold">Make Your Own Custom Form & Connect Google Sheet</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="lead mb-3">আপনিও খুব সহজে আপনার নিজের প্রজেক্টের জন্য এই ধরনের ফর্ম তৈরি করে নিজস্ব গুগল শিটে ডাটা জমা করতে পারেন!</p>
+                    
+                    <h6 class="fw-bold gold-text">কীভাবে কাজ করবেন:</h6>
+                    <ol class="lh-lg">
+                        <li><strong>Google Cloud Console Setup:</strong> প্রথমে Google Cloud Console থেকে সার্ভিস একাউন্ট খুলে <code>credentials.json</code> ফাইলটি আপনার প্রোজেক্টে যুক্ত করুন।</li>
+                        <li><strong>Google Sheet Share:</strong> আপনার গুগল ড্রাইভের শিটে সার্ভিস একাউন্টের ইমেইলটিতে <i>Editor</i> পারমিশন দিন।</li>
+                        <li><strong>Connect to App:</strong> আপনার নিজস্ব গুগল শিটের নাম এবং ফাইল কোডে আপডেট করে সার্ভার রান করলেই সব তথ্য আপনার শিটে জমা হবে।</li>
+                    </ol>
+
+                    <div class="alert alert-info mt-3" role="alert">
+                        📌 সোর্স কোড বা কাস্টমাইজেশনের সহায়তার জন্য ডেভেলপারের সাথে যোগাযোগ করুন।
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔻 FOOTER -->
+    <footer class="custom-footer text-center py-4 mt-auto border-top border-secondary">
+        <div class="container">
+            <p class="mb-1 fs-6">
+                &copy; 2026 All Rights Reserved | Developed by <strong class="gold-text">Md. Imon Hossain</strong>
+            </p>
+            <small class="text-muted">Dhaka College Psychology Society (DCPS) Web System</small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

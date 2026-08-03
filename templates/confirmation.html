@@ -1,0 +1,32 @@
+{% extends "master.html" %}
+
+{% block title %}Order Confirmation{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10 text-center">
+        <div class="card card-custom p-4">
+            <div class="alert alert-success">
+                <h4>Your jersey order has been successfully submitted. Your selected jersey number has been reserved. Thank you.</h4>
+            </div>
+
+            <h3 class="my-4">Your Custom Preview</h3>
+            
+            <div class="row my-3">
+                <div class="col-md-6 mb-3">
+                    <h5>Front View</h5>
+                    <img src="/static/base_front.png" class="img-fluid rounded border" alt="Front Jersey">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h5>Back View (Customized)</h5>
+                    <img src="/{{ back_image }}" class="img-fluid rounded border" alt="Back Jersey">
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="/" class="btn btn-outline-primary">Submit Another Order</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
